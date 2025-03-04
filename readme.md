@@ -1,8 +1,8 @@
 To run this project you need to have docker
 
-Run `docker-compose up` command to run all services and mongoDB in different containers 
+Run `docker-compose up` command to run all services and mongoDB in different containers - `not finish with this one, services can't connect to mongo`
 
-You can run locally by using maven or IDEA, `first` up mongoDB and then one by one services
+You can run locally by using maven or IDEA, `first` up mongoDB and then one by one services - better to use this one
 ## API Endpoints
 
 ### Data Storing Service
