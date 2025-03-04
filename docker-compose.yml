@@ -1,50 +1,34 @@
 version: '3.8'
 
 services:
+  # MongoDB Service
   mongodb:
     image: mongo:latest
     container_name: mongodb
+    restart: always
     ports:
-      - "27017:27017"   # Expose port 27017 on the host to access MongoDB
-    volumes:
-      - mongodb_data:/data/db   # Store MongoDB data in a named volume to persist data
+      - "27017:27017"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin  # Set root username
-      - MONGO_INITDB_ROOT_PASSWORD=admin123  # Set root password
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin123
 
   # sportsbookDataService Service
   sportsbookdataservice:
     build:
-      context: ./sportsbookDataService  # Assuming this folder has Dockerfile
+      context: ./sportsbookDataService
     container_name: sportsbookDataService
     ports:
-      - "8080:8080"   # Expose port 8080 inside container to 8081 on host
-    environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin123@mongodb:27017/admin  # MongoDB URI for Data Service
+      - "8080:8080"
     depends_on:
       - mongodb  # Wait for MongoDB to start before this service
-    networks:
-      - mongodb_network
 
   # sportsbookRetrievingService Service
   sportsbookretrievingservice:
     build:
-      context: ./sportsbookRetrievingService  # Assuming this folder has Dockerfile
+      context: ./sportsbookRetrievingService
     container_name: sportsbookRetrievingService
     ports:
-      - "8081:8080"   # Expose port 8080 inside container to 8082 on host
-    environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin123@mongodb:27017/admin  # MongoDB URI for Retrieving Service
+      - "8081:8080"
     depends_on:
       - mongodb
       - sportsbookdataservice
-    networks:
-      - mongodb_network
-
-volumes:
-  mongodb_data:
-    driver: local  # Specify the volume driver
-
-networks:
-  mongodb_network:
-    driver: bridge  # Use the default bridge network

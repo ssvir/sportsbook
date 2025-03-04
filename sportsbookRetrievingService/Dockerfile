@@ -1,5 +1,5 @@
 # Step 1: Build the application
-FROM maven:3.9.6-amazoncorretto-21 AS build
+FROM maven:3.9.8-eclipse-temurin-21 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -12,7 +12,7 @@ COPY src /app/src
 RUN mvn clean package -DskipTests
 
 # Step 2: Run the application
-FROM amazoncorretto
+FROM openjdk:21
 
 # Set the working directory
 WORKDIR /app
