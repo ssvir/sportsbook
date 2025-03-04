@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hazelcast xmlns="http://www.hazelcast.com/schema/config"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.hazelcast.com/schema/config
+                               http://www.hazelcast.com/schema/config/hazelcast-config-3.12.xsd">
+
+    <!-- Network Configuration for Instance 2 -->
+    <network>
+        <join>
+            <!-- Multicast Join Disabled -->
+            <multicast enabled="false"/>
+
+            <!-- TCP/IP Join -->
+            <tcp-ip enabled="true">
+                <member>127.0.0.1:5701</member> <!-- IP and port of the first instance -->
+            </tcp-ip>
+        </join>
+
+        <!-- Local instance public address -->
+        <public-address>127.0.0.1:5702</public-address> <!-- Second instance running on port 5702 -->
+    </network>
+
+    <!-- Map Configuration (Shared Cache) -->
+    <map name="sportEvent">
+        <backup-count>2</backup-count>
+        <time-to-live-seconds>3600</time-to-live-seconds>
+    </map>
+    <map name="sportEvents">
+        <backup-count>2</backup-count>
+        <time-to-live-seconds>3600</time-to-live-seconds>
+    </map>
+</hazelcast>
